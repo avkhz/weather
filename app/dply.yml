@@ -1,0 +1,69 @@
+ - name: ANSIBLE - Python Weather App Deployment
+   hosts: '{{ target }}'
+
+   tasks:
+   - name: Update apt-get repo and cache
+     become: yes
+     apt:
+       update_cache: yes
+       force_apt_get: yes
+       cache_valid_time: 3600
+
+   - name: Install required packages
+     become: yes
+     apt:
+       pkg:
+       - git
+       - nginx
+       - python3-pip
+       - python3-venv
+
+   - name: Copy file with owner and permissions
+     ansible.builtin.copy:
+      src: .
+      dest: /home/ubuntu/weather_app/weather_app
+
+
+
+   - name: Manually create the initial
+     shell: 'python3 -m venv /home/ubuntu/weather_app/weather_app/venv'
+       
+   - name: Install Requirements
+     pip:
+       requirements: /home/ubuntu/weather_app/weather_app/requirements.txt
+       virtualenv: /home/ubuntu/weather_app/weather_app/venv
+
+     
+   - name: Install Gunicorn Service
+     become: yes
+     copy: src=flask.service dest=/lib/systemd/system/ owner=ubuntu mode=644
+     notify:
+     - reload systemd
+     - enable flask
+     - restart flask
+
+   - name: Copy Nginx config
+     become: yes
+     copy: 
+       src: weather_app.conf 
+       dest: /etc/nginx/sites-enabled/default
+       force: true
+     notify:
+     - restart nginx
+
+   handlers:
+   - name: reload systemd
+     become: yes
+     command: systemctl daemon-reload
+
+   - name: enable flask
+     become: yes
+     command: systemctl enable flask
+
+   - name: restart flask
+     become: yes
+     command: systemctl restart flask
+
+   - name: restart nginx
+     become: yes
+     command: systemctl restart nginx

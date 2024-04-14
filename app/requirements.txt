@@ -1,0 +1,6 @@
+Flask
+Jinja2
+python-dotenv
+requests
+gunicorn
+prometheus-flask-exporter

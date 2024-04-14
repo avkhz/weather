@@ -1,0 +1,13 @@
+[Unit]
+Description="service to create a gurnicorn worker"
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/weather_app/weather_app
+Environment="PATH=/home/ubuntu/weather_app/weather_app/venv/bin"
+ExecStart=/home/ubuntu/weather_app/weather_app/venv/bin/gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
