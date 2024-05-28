@@ -1,4 +1,8 @@
 version: 2  # Version of CircleCI
+orbs:
+  discord: antonioned/discord@0.1.0
+
+
 jobs:
   build:
     docker:
@@ -44,3 +48,9 @@ jobs:
           command: |
             docker login -u $USERNAME -p $PASSWORD
             docker push avkh12345/circleci:v2
+
+      - discord/status:
+          fail_only: false
+          failure_message: "**${CIRCLE_USERNAME}**'s build: **${CIRCLE_JOB}** failed."
+          success_message: "**${CIRCLE_USERNAME}** deployed api to prod."
+          webhook: "${DISCORD_STATUS_WEBHOOK}"
