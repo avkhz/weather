@@ -42,5 +42,5 @@ jobs:
 # <docker_hub_username/docker-hub-password:version> you used to build the image above
           name: Push to Docker Hub
           command: |
-            docker login -u username -p password
+            docker login -u $USERNAME -p $PASSWORD
             docker push avkh12345/circleci:v2
