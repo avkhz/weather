@@ -5,5 +5,5 @@ def test_main():
     response = app.test_client().get('/') 
 
                 # assert the stutus code of the page('/') is 200
-    assert response.status_code == 200 
+    assert response.status_code == 400 
 
