@@ -46,7 +46,7 @@ jobs:
 # <docker_hub_username/docker-hub-password:version> you used to build the image above
           name: Push to Gitlab Container Registry
           command: |
-             echo "$GITLAB_PASSWORD" | docker login -u "$GITLAB_USERNAME" --password-stdin $DOCKER_REGISTRY
+             echo "$GITLAB_PASSWORD" | docker login $DOCKER_REGISTRY -u "$GITLAB_USERNAME" --password-stdin
              docker build -t DOCKER_REGISTRY/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}" .
              docker push DOCKER_REGISTRY/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}"
 
