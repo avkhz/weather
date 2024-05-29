@@ -54,14 +54,18 @@ jobs:
 #            docker login -u $USERNAME -p $PASSWORD
    #         docker push avkh12345/circleci:v2
 
-      - bridgecrew/scan:
-          api-key-variable: BC_API_KEY
-          directory: ./terraform
-          output: json
-          soft-fail: true
-
       - discord/status:
           fail_only: false
           failure_message: "**${CIRCLE_USERNAME}**'s build: **${CIRCLE_JOB}** failed."
           success_message: "**${CIRCLE_USERNAME}** deployed api to prod."
           webhook: "${DISCORD_WEBHOOK}"
+
+  checkov:
+    executor: bridgecrew/default
+    steps:
+      - checkout
+      - bridgecrew/scan:
+          api-key-variable: BC_API_KEY
+          directory: ./terraform
+          output: json
+          soft-fail: true
