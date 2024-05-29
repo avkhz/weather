@@ -67,7 +67,7 @@ jobs:
           api-key-variable: BC_API_KEY
           directory: ./terraform
           output: json
-#          soft-fail: true
+          soft-fail: true
 workflows:
   my-workflows:
     jobs:
