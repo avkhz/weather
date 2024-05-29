@@ -44,10 +44,14 @@ jobs:
         # Pushes the Docker image you created to the Docker Hub.
         # Replace khabdrick/circleci-tutorial:v1 with the 
 # <docker_hub_username/docker-hub-password:version> you used to build the image above
-          name: Push to Docker Hub
+          name: Push to Gitlab Container Registry
           command: |
-            docker login -u $USERNAME -p $PASSWORD
-            docker push avkh12345/circleci:v2
+             echo "$GITLA_PASSWORD" | docker login -u "$GITLAB_USERNAME" --password-stdin $DOCKER_REGISTRY
+            docker build -t registry.gitlab.com/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}" .
+            docker push registry.gitlab.com/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}"
+
+#            docker login -u $USERNAME -p $PASSWORD
+   #         docker push avkh12345/circleci:v2
 
       - discord/status:
           fail_only: false
