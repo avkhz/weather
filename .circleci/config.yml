@@ -59,7 +59,6 @@ jobs:
           failure_message: "**${CIRCLE_USERNAME}**'s build: **${CIRCLE_JOB}** failed."
           success_message: "**${CIRCLE_USERNAME}** deployed api to prod."
           webhook: "${DISCORD_WEBHOOK}"
-
   checkov:
     executor: bridgecrew/default
     steps:
@@ -69,3 +68,8 @@ jobs:
           directory: ./terraform
           output: json
           soft-fail: true
+workflows:
+  my-workflows:
+    jobs:
+      - build
+      - checkov
