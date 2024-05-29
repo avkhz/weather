@@ -1,6 +1,7 @@
 version: 2.1  # Version of CircleCI
 orbs:
   discord: antonioned/discord@0.1.0
+  bridgecrew: bridgecrew/bridgecrew@1.0.5
 
 
 jobs:
@@ -52,6 +53,12 @@ jobs:
 
 #            docker login -u $USERNAME -p $PASSWORD
    #         docker push avkh12345/circleci:v2
+
+      - bridgecrew/scan:
+          api-key-variable: BC_API_KEY
+          directory: ./terraform
+          output: json
+          soft-fail: true
 
       - discord/status:
           fail_only: false
