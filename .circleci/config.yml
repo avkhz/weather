@@ -47,8 +47,8 @@ jobs:
           name: Push to Gitlab Container Registry
           command: |
              echo "$GITLA_PASSWORD" | docker login -u "$GITLAB_USERNAME" --password-stdin $DOCKER_REGISTRY
-            docker build -t registry.gitlab.com/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}" .
-            docker push registry.gitlab.com/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}"
+             docker build -t registry.gitlab.com/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}" .
+             docker push registry.gitlab.com/test_group1013907/test_project:"${CIRCLE_BUILD_NUM}"
 
 #            docker login -u $USERNAME -p $PASSWORD
    #         docker push avkh12345/circleci:v2
