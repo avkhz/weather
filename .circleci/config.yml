@@ -94,6 +94,6 @@ workflows:
       - checkov:
           requires:
             - build
-      - deploy-to-aws:
-          requires:
-            - checkov
+#      - deploy-to-aws:
+#          requires:
+#            - checkov
