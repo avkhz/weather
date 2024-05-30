@@ -1,0 +1,6 @@
+.terraform.lock.hcl
+go.mod
+go.sum
+terraform.tfstate
+terraform.tfstate.backup
+terraform/.terraform/

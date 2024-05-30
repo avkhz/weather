@@ -252,19 +252,6 @@ provider "aws" {
     ]
   }
 
-  resource "aws_instance" "kubectl-server" {
-    ami                         = var.ami
-    key_name                    = var.key_name  # Make sure the key pair exists in eu-north-1 region
-    instance_type               = var.master_node_ec2_type
-    associate_public_ip_address = true
-    subnet_id                   = aws_subnet.Mysubnet01.id
-    vpc_security_group_ids      = [aws_security_group.allow_tls.id]
-
-    tags = {
-      Name = "kubectl_master"
-    }
-  }
-
   resource "aws_eks_node_group" "node-grp" {
     cluster_name    = aws_eks_cluster.eks.name
     node_group_name = "pc-node-group"

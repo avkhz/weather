@@ -22,10 +22,6 @@ variable "ami" {
   default = "ami-0705384c0b33c194c"
 }
 
-variable "master_node_ec2_type" {
-  default = "t3.micro"
-}
-
 variable "worker_node_ec2_type" {
   default = "t3.small"
 }

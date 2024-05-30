@@ -2,7 +2,8 @@ version: 2.1  # Version of CircleCI
 orbs:
   discord: antonioned/discord@0.1.0
   bridgecrew: bridgecrew/bridgecrew@1.0.5
-
+  aws-eks: circleci/aws-eks@1.0.0
+  kubernetes: circleci/kubernetes@0.11.1
 
 jobs:
   build:
@@ -68,8 +69,31 @@ jobs:
           directory: ./terraform
           output: json
           soft-fail: true
+
+  deploy-to-aws:
+#    executor: aws-eks/python3
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - checkout
+      - run:
+          name: Initialize Terraform
+          command: |
+            cd ./terraform
+            terraform init
+      - run:
+          name: Apply Terraform Configuration
+          command: |
+            cd ./terraform
+            terraform apply -auto-approve
+
 workflows:
-  my-workflows:
+  build-test-deployTerraform:
     jobs:
       - build
-      - checkov
+      - checkov:
+          requires:
+            - build
+      - deploy-to-aws:
+          requires:
+            - checkov
